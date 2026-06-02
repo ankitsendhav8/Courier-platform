@@ -4,43 +4,42 @@ const logger = require('../utils/logger');
 const CourierFactory = require('../factories/courierFactory');
 const AppError = require('../utils/AppError');
 
-async function createOrder(order) {
-
-    const exists = await orderRepository.orderExists(order.order_id);
-    if (exists) {
-        throw new AppError(400, 'DUPLICATE_ORDER', `Order ${order.order_id} already exists`);
-    }
+async function createOrder(formData) {
+    formData.order_id = new Date().getTime();
+    formData.orderNumber = new Date().getTime();
     logger.info({
-        order_id: order.order_id,
-        courier_partner: order.courier_partner,
+        order_id: formData.order_id,
+        courier_partner: formData.courier_partner,
         message: 'Creating shipment'
     });
+    console.log('formData-createOrder', JSON.stringify(formData));
 
-    const courier = CourierFactory.getAdapter(order.courier_partner);
-    console.log('courier-createOrder', courier);
-    const shipment = await courier.createShipment(order);
-    console.log('shipment-createOrder', shipment);
-    await orderRepository.createOrder({
-        ...order,
-        courier_order_id: shipment.courierOrderId,
-        awb_number: shipment.awbNumber,
-        status: shipment.status,
-        courier_request: order,
-        courier_response: shipment
-    });
-    logger.info({
-        order_id: order.order_id,
-        status: shipment.status,
-        awb: shipment.awbNumber
-    });
+    const courier = CourierFactory.getAdapter(formData.courier_partner);
+    const shipment = await courier.createShipment(formData);
+    if (shipment) {
+        await orderRepository.createOrder({
+            ...formData,
+            courier_order_id: shipment.orderNumber,
+            awb_number: shipment.awbNumber,
+            status: 'CREATED',
+            courier_request: formData,
+            courier_response: shipment
+        });
+        logger.info({
+            order_id: formData.order_id,
+            status: 'CREATED',
+            awb: shipment.awbNumber
+        });
+    }
     return shipment;
+
 }
 async function trackOrder(orderId) {
     const order = await orderRepository.getOrderByOrderId(orderId);
     if (!order) {
         throw new AppError(404, 'ORDER_NOT_FOUND', 'Order not found');
     }
-    
+
     const courier = CourierFactory.getAdapter(order.courier_partner);
     const tracking = await courier.trackShipment(order.awb_number);
     logger.info({

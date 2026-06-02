@@ -15,43 +15,41 @@ class UrbaneBoltAdapter extends BaseCourierAdapter {
                 password: process.env.URBANEBOLT_PASSWORD
             }
         );
-        const token = response.data.token;
+        const token = response.data.access_token;
         tokenService.setToken(token);
         return token;
     }
 
-    async createShipment(order) {
-        return this.executeWithAuth(
-            async () => {
-                return retryWithBackoff(
-                    async () => {
-                        // const token = tokenService.getToken();
-                        // const response =
-                        //     await client.post('/shipment', order,
-                        //         {
-                        //             headers: {
-                        //                 Authorization:
-                        //                     `Bearer ${token}`
-                        //             }
-                        //         }
-                        //     );
-                        // return response.data;
-                        return {
-                            courierOrderId: 'UB123456',
-                            awbNumber: 'AWB987654',
-                            status: 'CREATED'
-                        };
-                    }
-                );
-            }
+    async createShipment(formData) {
+        return this.executeWithAuth(async () => {
+            return retryWithBackoff(
+                async () => {
+                    const token = await this.getValidToken();
+                    delete formData.order_id;
+                    delete formData.orderNumber;
+                    let data = JSON.stringify(formData)
+                    const response = await axios.post(
+                        `${process.env.URBANEBOLT_BASE_URL}/api/v1/services/manifest/`,
+                        data,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+                    return response.data.successResponse && response.data.successResponse.length > 0 ? response.data.successResponse[0] : null;
+                }
+            );
+        }
         );
     }
 
     async trackShipment(awbNumber) {
         return this.executeWithAuth(
             async () => {
-                const token = await this.getValidToken();
                 return retryWithBackoff(async () => {
+                    const token = await this.getValidToken();
                     const response = await axios.get(
                         `${process.env.URBANEBOLT_BASE_URL}/api/v1/services/tracking-pub/?awb=${awbNumber}`,
                         {
@@ -70,22 +68,21 @@ class UrbaneBoltAdapter extends BaseCourierAdapter {
     async cancelShipment(awbNumber) {
         return this.executeWithAuth(
             async () => {
-                const token = await this.getValidToken();
-                return retryWithBackoff(
-                    async () => {
-                        const response = await axios.post(
-                            `${process.env.URBANEBOLT_BASE_URL}/api/v1/services/cancel/`,
-                            {
-                                awbs: awbNumber
-                            },
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${token}`
-                                }
+                return retryWithBackoff(async () => {
+                    const token = await this.getValidToken();
+                    const response = await axios.post(
+                        `${process.env.URBANEBOLT_BASE_URL}/api/v1/services/cancel/`,
+                        {
+                            awbs: awbNumber
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`
                             }
-                        );
-                        return response.data;
-                    }
+                        }
+                    );
+                    return response.data;
+                }
                 );
             });
     }
