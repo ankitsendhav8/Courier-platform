@@ -17,7 +17,9 @@ async function createOrder(order) {
     });
 
     const courier = CourierFactory.getAdapter(order.courier_partner);
+    console.log('courier-createOrder', courier);
     const shipment = await courier.createShipment(order);
+    console.log('shipment-createOrder', shipment);
     await orderRepository.createOrder({
         ...order,
         courier_order_id: shipment.courierOrderId,

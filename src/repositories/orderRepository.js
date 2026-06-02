@@ -17,14 +17,14 @@ async function getOrderByAwbNumber(awbNumber) {
     return rows[0];
 }
 async function updateOrderStatus(orderId, status) {
-    const sql = ` UPDATE orders SET status = ? WHERE order_id = ?`;
+    const sql = ` UPDATE orders SET status = ? WHERE courier_order_id = ?`;
     await pool.execute(sql, [status, orderId]);
 }
 
 async function orderExists(orderId) {
-    const sql = `SELECT id FROM orders WHERE order_id = ?`;
+    const sql = `SELECT id FROM orders WHERE courier_order_id = ?`;
     const [rows] = await pool.execute(sql, [orderId]);
     return rows.length > 0;
 }
 
-module.exports = { createOrder, getOrderByOrderId, updateOrderStatus, orderExists };
+module.exports = { createOrder, getOrderByOrderId, updateOrderStatus, orderExists, getOrderByAwbNumber };
