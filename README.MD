@@ -10,7 +10,7 @@ This project is built with Node.js and uses various dependencies to provide serv
 
 1. Clone the repository and navigate to the project directory:
    ```bash
-   git clone https://github.com/deepkiraninc/PandoArch-Node.git
+   git clone https://github.com/ankitsendhav8/Courier-platform.git
    cd Courier-platform
    ```
 
@@ -60,13 +60,13 @@ npm run dev
 
 ## API Endpoints
 
-POST /api/v1/orders - Create a shipment
+POST /api/v1/orders ###- Create a shipment
  
-POST /api/v1/orders/bulk - Create shipment in bulk
+POST /api/v1/orders/bulk ###- Create shipment in bulk
 
-GET /api/v1/orders/:orderId/track - Track the shipment
+GET /api/v1/orders/:orderId/track ###- Track the shipment
 
-POST /api/v1/orders/:awb_number/cancel -  Cancel the shipment
+POST /api/v1/orders/:awb_number/cancel ###-  Cancel the shipment
 
 
 ## Bulk Processing

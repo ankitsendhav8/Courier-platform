@@ -1,24 +1,10 @@
-# DESIGN.md
-
 # System Design Document
 
 ## Architecture
 
-Client
-↓
-Controller
-↓
-Service
-↓
-Factory
-↓
-Adapter
-↓
-Courier API
+Client -> Controller -> Service -> Factory -> Adapter -> Courier API
 
-Repository Layer
-↓
-MySQL
+Repository Layer -> MySQL
 
 ## Design Patterns
 
