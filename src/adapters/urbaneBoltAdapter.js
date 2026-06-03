@@ -1,12 +1,12 @@
 const axios = require('axios');
 
 const BaseCourierAdapter = require('./baseCourierAdapter');
-const client = require('../utils/httpClient');
 const { retryWithBackoff } = require('../utils/retry');
 const tokenService = require('../services/tokenService');
 
 class UrbaneBoltAdapter extends BaseCourierAdapter {
 
+    // Implementation of authenticate from Urban bolt api to get token for further requests
     async authenticate() {
         const response = await axios.post(
             `${process.env.URBANEBOLT_BASE_URL}/api/v1/auth/getToken/`,
@@ -20,6 +20,7 @@ class UrbaneBoltAdapter extends BaseCourierAdapter {
         return token;
     }
 
+    // Implementation of createShipment from Urban bolt api to create a shipment
     async createShipment(formData) {
         return this.executeWithAuth(async () => {
             return retryWithBackoff(
@@ -46,6 +47,7 @@ class UrbaneBoltAdapter extends BaseCourierAdapter {
         );
     }
 
+    // Implementation of trackShipment from Urban bolt api to track a shipment by awb number
     async trackShipment(awbNumber) {
         return this.executeWithAuth(
             async () => {

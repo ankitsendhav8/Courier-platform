@@ -1,3 +1,4 @@
+// Sample adapter interface
 class BaseCourierAdapter {
 
     async authenticate() {

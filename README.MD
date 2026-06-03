@@ -19,6 +19,16 @@ This project is built with Node.js and uses various dependencies to provide serv
    npm install
    ```
 
+3. Import the postman collection:
+   ```bash
+   Import the Postman collection from the Courier Platform.postman_collection.json file included in this GitHub repository to test the API endpoints.
+   ```
+
+2. Import the MYSQL collection:
+   ```bash
+   Import the provided courier-sql.sql file into MySQL to set up the database before running the application.
+   ```
+     
 ## Available Scripts
 
 ### Start the Server

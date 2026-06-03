@@ -4,6 +4,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Retry the function with backoff
 async function retryWithBackoff(fn, retries = process.env.RETRY_COUNT || 3, delay = process.env.RETRY_DELAY || 1000) {
     try {
         logger.warn({

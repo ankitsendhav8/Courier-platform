@@ -4,8 +4,8 @@ const AppError = require('../utils/AppError');
 
 class CourierFactory {
 
+    // Factory method to get the appropriate adapter based on the courier partner from request
     static getAdapter(courierPartner) {
-
         switch (courierPartner) {
             case 'urbanebolt':
                 return new UrbaneBoltAdapter();

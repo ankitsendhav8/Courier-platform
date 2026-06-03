@@ -1,0 +1,146 @@
+{
+  "info": {
+    "_postman_id": "645d0b9b-c1c5-4003-8f44-bd904664ce26",
+    "name": "Courier Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34723452"
+  },
+  "item": [
+    {
+      "name": "Create Order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"order_id\": \"123456\",\r\n    \"courier_partner\": \"urbanebolt\",\r\n    \"customerCode\": \"UEBCUS0008\",\r\n    \"declaredValue\": 100,\r\n    \"itemDescription\": \"BOOKS\",\r\n    \"collectableValue\": 1,\r\n    \"height\": 10,\r\n    \"length\": 12,\r\n    \"pieces\": 1,\r\n    \"weight\": 1.1,\r\n    \"breadth\": 10,\r\n    \"serviceType\": \"SDD\",\r\n    \"payMode\": \"COD\",\r\n    \"rtnCity\": \"Ahmedabad\",\r\n    \"rtnName\": \"Rohit Athaley\",\r\n    \"consCity\": \"Ahmedabad\",\r\n    \"consName\": \"Ankit\",\r\n    \"rtnEmail\": \"bhopal@mbdgroup.com\",\r\n    \"rtnState\": \"GUJARAT\",\r\n    \"shprCity\": \"Ahmedabad\",\r\n    \"shprName\": \"Rohit Athaley\",\r\n    \"consEmail\": \"TEST2@AIL.COM\",\r\n    \"consState\": \"GUJARAT\",\r\n    \"rtnMobile\": 9425018023,\r\n    \"shprEmail\": \"bhopasl@mbdgroup.com\",\r\n    \"shprState\": \"GUJARAT\",\r\n    \"consMobile\": 8320226438,\r\n    \"rtnAddress\": \"HOLY FAITH INTERNATIONAL P LTD,Plot No.l37-138-139 Sector-I Spl.Industrial Area Govindpura\",\r\n    \"rtnAddressType\": \"Seller\",\r\n    \"rtnCountry\": \"INDIA\",\r\n    \"rtnPincode\": 380015,\r\n    \"shprMobile\": 9425018023,\r\n    \"consAddress\": \"Jodhpur village\",\r\n    \"consAddressType\": \"Home\",\r\n    \"consCountry\": \"INDIA\",\r\n    \"consPincode\": 380015,\r\n    \"invoiceNumber\": \"INV0002\",\r\n    \"invoiceDate\": \"2026-06-01\",\r\n    \"shprAddress\": \"HOLY FAITH INTERNATIONAL P LTD,Plot No.l37-138-139 Sector-I Spl.Industrial Area Govindpura\",\r\n    \"shprAddressType\": \"Seller\",\r\n    \"shprCountry\": \"INDIA\",\r\n    \"shprPincode\": 122001,\r\n    \"invoiceValue\": 10,\r\n    \"itemQuantity\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/orders",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "v1",
+            "orders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Track Order",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/v1/orders/:orderId/track",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "v1",
+            "orders",
+            ":orderId",
+            "track"
+          ],
+          "query": [
+            {
+              "key": "orderId",
+              "value": "",
+              "type": "text",
+              "disabled": true
+            }
+          ],
+          "variable": [
+            {
+              "key": "orderId",
+              "value": "1780471673517"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cancel Order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/orders/:awb_number/cancel",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "v1",
+            "orders",
+            ":awb_number",
+            "cancel"
+          ],
+          "variable": [
+            {
+              "key": "awb_number",
+              "value": "200000006625"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Bulk Order Create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"orders\": [\r\n        {\r\n            \"order_id\": \"123456\",\r\n            \"courier_partner\": \"urbanebolt\",\r\n            \"customerCode\": \"UEBCUS0008\",\r\n            \"declaredValue\": 100,\r\n            \"itemDescription\": \"BOOKS\",\r\n            \"collectableValue\": 1,\r\n            \"height\": 10,\r\n            \"length\": 12,\r\n            \"pieces\": 1,\r\n            \"weight\": 1.1,\r\n            \"breadth\": 10,\r\n            \"serviceType\": \"SDD\",\r\n            \"payMode\": \"COD\",\r\n            \"rtnCity\": \"Ahmedabad\",\r\n            \"rtnName\": \"Rohit Athaley\",\r\n            \"consCity\": \"Ahmedabad\",\r\n            \"consName\": \"Ankit\",\r\n            \"rtnEmail\": \"bhopal@mbdgroup.com\",\r\n            \"rtnState\": \"GUJARAT\",\r\n            \"shprCity\": \"Ahmedabad\",\r\n            \"shprName\": \"Rohit Athaley\",\r\n            \"consEmail\": \"TEST2@AIL.COM\",\r\n            \"consState\": \"GUJARAT\",\r\n            \"rtnMobile\": 9425018023,\r\n            \"shprEmail\": \"bhopasl@mbdgroup.com\",\r\n            \"shprState\": \"GUJARAT\",\r\n            \"consMobile\": 8320226438,\r\n            \"rtnAddress\": \"HOLY FAITH INTERNATIONAL P LTD,Plot No.l37-138-139 Sector-I Spl.Industrial Area Govindpura\",\r\n            \"rtnAddressType\": \"Seller\",\r\n            \"rtnCountry\": \"INDIA\",\r\n            \"rtnPincode\": 380015,\r\n            \"shprMobile\": 9425018023,\r\n            \"consAddress\": \"Jodhpur village\",\r\n            \"consAddressType\": \"Home\",\r\n            \"consCountry\": \"INDIA\",\r\n            \"consPincode\": 380015,\r\n            \"invoiceNumber\": \"INV0002\",\r\n            \"invoiceDate\": \"2026-06-01\",\r\n            \"shprAddress\": \"HOLY FAITH INTERNATIONAL P LTD,Plot No.l37-138-139 Sector-I Spl.Industrial Area Govindpura\",\r\n            \"shprAddressType\": \"Seller\",\r\n            \"shprCountry\": \"INDIA\",\r\n            \"shprPincode\": 122001,\r\n            \"invoiceValue\": 10,\r\n            \"itemQuantity\": 1\r\n        },\r\n        {\r\n            \"courier_partner\": \"mockcourier\",\r\n            \"customerCode\": \"UEBCUS0008\",\r\n            \"declaredValue\": 100,\r\n            \"itemDescription\": \"BOOKS\",\r\n            \"collectableValue\": 1,\r\n            \"height\": 10,\r\n            \"length\": 12,\r\n            \"pieces\": 1,\r\n            \"weight\": 1.1,\r\n            \"breadth\": 10,\r\n            \"serviceType\": \"SDD\",\r\n            \"payMode\": \"COD\",\r\n            \"rtnCity\": \"Ahmedabad\",\r\n            \"rtnName\": \"Rohit Athaley\",\r\n            \"consCity\": \"Ahmedabad\",\r\n            \"consName\": \"Ankit\",\r\n            \"rtnEmail\": \"bhopal@mbdgroup.com\",\r\n            \"rtnState\": \"GUJARAT\",\r\n            \"shprCity\": \"Ahmedabad\",\r\n            \"shprName\": \"Rohit Athaley\",\r\n            \"consEmail\": \"TEST2@AIL.COM\",\r\n            \"consState\": \"GUJARAT\",\r\n            \"rtnMobile\": 9425018023,\r\n            \"shprEmail\": \"bhopasl@mbdgroup.com\",\r\n            \"shprState\": \"GUJARAT\",\r\n            \"consMobile\": 8320226438,\r\n            \"rtnAddress\": \"HOLY FAITH INTERNATIONAL P LTD,Plot No.l37-138-139 Sector-I Spl.Industrial Area Govindpura\",\r\n            \"rtnAddressType\": \"Seller\",\r\n            \"rtnCountry\": \"INDIA\",\r\n            \"rtnPincode\": 380015,\r\n            \"shprMobile\": 9425018023,\r\n            \"consAddress\": \"Jodhpur village\",\r\n            \"consAddressType\": \"Home\",\r\n            \"consCountry\": \"INDIA\",\r\n            \"consPincode\": 380015,\r\n            \"invoiceNumber\": \"INV0002\",\r\n            \"invoiceDate\": \"2026-06-01\",\r\n            \"shprAddress\": \"HOLY FAITH INTERNATIONAL P LTD,Plot No.l37-138-139 Sector-I Spl.Industrial Area Govindpura\",\r\n            \"shprAddressType\": \"Seller\",\r\n            \"shprCountry\": \"INDIA\",\r\n            \"shprPincode\": 122001,\r\n            \"invoiceValue\": 10,\r\n            \"itemQuantity\": 1\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/orders/bulk",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "v1",
+            "orders",
+            "bulk"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

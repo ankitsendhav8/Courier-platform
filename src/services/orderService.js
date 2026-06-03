@@ -4,9 +4,17 @@ const logger = require('../utils/logger');
 const CourierFactory = require('../factories/courierFactory');
 const AppError = require('../utils/AppError');
 
+// Service to create a new order
+// Checked idempotancy by checking if the order already exists in the database if exists then throw an error
+// Added core logic for creating a new order as per courier adapter
+
 async function createOrder(formData) {
-    formData.order_id = new Date().getTime();
-    formData.orderNumber = new Date().getTime();
+    const existingOrder = await orderRepository.getOrderByOrderId(formData.order_id);
+    if (existingOrder) {
+        throw new AppError(400, 'DUPLICATE_ORDER', `Order ${formData.order_id} already exists`);
+    }
+
+    formData.orderNumber = formData.order_id;
     logger.info({
         order_id: formData.order_id,
         courier_partner: formData.courier_partner,
@@ -33,6 +41,15 @@ async function createOrder(formData) {
 
     return shipment;
 }
+
+// Service to track a order by order id
+// Get the order from the database by order id
+// Get the courier adapter from the factory based on the courier partner
+// Track the shipment by awb number
+// Create a tracking history in the database
+// Update the order status in the database
+// Return the tracking data
+
 async function trackOrder(orderId) {
     const order = await orderRepository.getOrderByOrderId(orderId);
     if (!order) {
@@ -55,6 +72,15 @@ async function trackOrder(orderId) {
     return tracking;
 }
 
+
+// Service to cancel a order by awb number
+// Get the order from the database by awb number
+// Check if the order is already delivered or cancelled then throw an error
+// Get the courier adapter from the factory based on the courier partner
+// Cancel the shipment by awb number
+// Create a tracking history in the database
+// Update the order status in the database
+// Return the cancellation data
 async function cancelOrder(awb_number) {
     const order = await orderRepository.getOrderByAwbNumber(awb_number);
     if (!order) {
@@ -83,6 +109,12 @@ async function cancelOrder(awb_number) {
     });
     return response;
 }
+
+// Service to create a bulk orders
+// Create a bulk orders by iterating through the orders array
+// Create a new order for each order in the array
+// Return the bulk order data
+
 async function createBulkOrders(orders) {
     const results = await Promise.allSettled(orders.map(order => createOrder(order)));
 
@@ -106,9 +138,7 @@ async function createBulkOrders(orders) {
                 error: result.reason.message
             });
         }
-    }
-    );
-
+    });
     return { successCount, failureCount, results: response };
 }
 

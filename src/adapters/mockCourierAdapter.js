@@ -1,7 +1,8 @@
 const BaseCourierAdapter = require('./baseCourierAdapter');
 
-class MockCourierAdapter
-    extends BaseCourierAdapter {
+class MockCourierAdapter extends BaseCourierAdapter {
+
+    // Mock implementation of createShipment
     async createShipment() {
         return {
             orderNumber: 'MC111',
@@ -10,6 +11,7 @@ class MockCourierAdapter
         };
     }
 
+    // Mock implementation of trackShipment
     async trackShipment(awbNumber) {
         return {
             orderNumber: 'MC111',
@@ -18,6 +20,7 @@ class MockCourierAdapter
         };
     }
 
+    // Mock implementation of cancelShipment
     async cancelShipment(awbNumber) {
         return {
             orderNumber: 'MC111',
