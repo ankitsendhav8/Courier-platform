@@ -21,7 +21,7 @@ async function createOrder(formData) {
         message: 'Creating shipment'
     });
     const courier = CourierFactory.getAdapter(formData.courier_partner);
-    const shipment = await courier.createShipment(formData);
+   const shipment = await courier.createShipment(formData);
     if (shipment) {
         await orderRepository.createOrder({
             ...formData,
@@ -36,6 +36,21 @@ async function createOrder(formData) {
             order_id: formData.order_id,
             status: 'CREATED',
             awb: shipment.awbNumber
+        });
+    }else{
+        await orderRepository.createOrder({
+            ...formData,
+            courier_partner: formData.courier_partner,
+            courier_order_id: formData.order_id,
+            awb_number: 0,
+            status: 'FAILED',
+            courier_request: formData,
+            courier_response: null
+        });
+        logger.info({
+            order_id: formData.order_id,
+            status: 'FAILED',
+            awb: 0
         });
     }
 

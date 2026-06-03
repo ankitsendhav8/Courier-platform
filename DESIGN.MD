@@ -2,9 +2,7 @@
 
 ## Architecture
 
-Client -> Controller -> Service -> Factory -> Adapter -> Courier API
-
-Repository Layer -> MySQL
+Client -> Controller -> Service -> Factory -> Adapter -> Courier API -> Repository Layer -> MySQL
 
 ## Design Patterns
 

@@ -24,11 +24,30 @@ This project is built with Node.js and uses various dependencies to provide serv
    Import the Postman collection from the Courier Platform.postman_collection.json file included in this GitHub repository to test the API endpoints.
    ```
 
-2. Import the MYSQL collection:
+4. Import the MYSQL collection:
    ```bash
    Import the provided courier-sql.sql file into MySQL to set up the database before running the application.
    ```
-     
+
+5. Add .env file
+   ```bash
+   PORT=3000
+
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=root
+   DB_NAME=courier_platform
+
+   RETRY_COUNT=3
+   RETRY_DELAY=1000
+   COURIER_TIMEOUT=10000
+
+   URBANEBOLT_BASE_URL=https://uat.urbanebolt.in
+   URBANEBOLT_USERNAME=info@urbanebolt.com
+   URBANEBOLT_PASSWORD=EKIcygsLVV5RCtPZ
+   ```
+
+
 ## Available Scripts
 
 ### Start the Server

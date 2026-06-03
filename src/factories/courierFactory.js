@@ -4,17 +4,30 @@ const AppError = require('../utils/AppError');
 
 class CourierFactory {
 
+    static supportedCouriers = {
+        urbanebolt: UrbaneBoltAdapter,
+        mockcourier: MockCourierAdapter
+    };
+
+    static getSupportedCouriers() {
+        return Object.keys(this.supportedCouriers);
+    }
+
     // Factory method to get the appropriate adapter based on the courier partner from request
     static getAdapter(courierPartner) {
+
+
         switch (courierPartner) {
             case 'urbanebolt':
                 return new UrbaneBoltAdapter();
             case 'mockcourier':
                 return new MockCourierAdapter();
             default:
-                throw new AppError(400, "INVALID_COURIER", `Unsupported courier: ${courierPartner}`);
+                throw new AppError(400, 'INVALID_COURIER', `Unsupported courier: ${courierPartner}`, { supportedCouriers: this.getSupportedCouriers() }
+                );
         }
     }
+
 }
 
 module.exports = CourierFactory;

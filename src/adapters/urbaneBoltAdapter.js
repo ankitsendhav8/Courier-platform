@@ -22,29 +22,29 @@ class UrbaneBoltAdapter extends BaseCourierAdapter {
 
     // Implementation of createShipment from Urban bolt api to create a shipment
     async createShipment(formData) {
-        return this.executeWithAuth(async () => {
-            return retryWithBackoff(
-                async () => {
-                    const token = await this.getValidToken();
-                    let formDetails = JSON.parse(JSON.stringify(formData));
-                    delete formDetails.order_id;
-                    delete formDetails.courier_partner;
-                    let data = JSON.stringify([formDetails])
-                    const response = await axios.post(
-                        `${process.env.URBANEBOLT_BASE_URL}/api/v1/services/manifest/`,
-                        data,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                                'Content-Type': 'application/json'
+            return this.executeWithAuth(async () => {
+                return retryWithBackoff(
+                    async () => {
+                        const token = await this.getValidToken();
+                        let formDetails = JSON.parse(JSON.stringify(formData));
+                        delete formDetails.order_id;
+                        delete formDetails.courier_partner;
+                        let data = JSON.stringify([formDetails])
+                        const response = await axios.post(
+                            `${process.env.URBANEBOLT_BASE_URL}/api/v1/services/manifest/`,
+                            data,
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                    'Content-Type': 'application/json'
+                                }
                             }
-                        }
-                    );
-                    return response.data.successResponse && response.data.successResponse.length > 0 ? response.data.successResponse[0] : null;
-                }
+                        );
+                        return response.data.successResponse && response.data.successResponse.length > 0 ? response.data.successResponse[0] : null;
+                    }
+                );
+            }
             );
-        }
-        );
     }
 
     // Implementation of trackShipment from Urban bolt api to track a shipment by awb number

@@ -4,7 +4,15 @@ const orderService = require('../services/orderService');
 async function createOrder(req, res, next) {
     try {
         const result = await orderService.createOrder(req.body);
-        res.json(result);
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(400).json({
+                success: false,
+                errorCode: 'FAILED',
+                message: 'Failed to create order'
+            });
+        }
     } catch (error) {
         next(error);
     }

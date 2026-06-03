@@ -13,11 +13,18 @@ module.exports = (err, req, res, next) => {
             errorCode: err.errorCode,
             message: 'Order already exists'
         });
+    } else if (err.errorCode === 'VALIDATION_ERROR') {
+        return res.status(400).json({
+            success: false,
+            errorCode: 'VALIDATION_ERROR',
+            message: err.message
+        });
     } else {
         return res.status(err.statusCode || 500).json({
             success: false,
             errorCode: err.errorCode || 'INTERNAL_SERVER_ERROR',
-            message: err.message || 'Something went wrong'
+            message: err.message || 'Something went wrong',
+            ...(err.details || {})
         });
     }
 };

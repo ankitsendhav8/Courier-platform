@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 // Validation schema for create order request single and bulk
 const createOrderSchema = Joi.object({
-    courier_partner: Joi.string().required().valid('urbanebolt', 'mockcourier'),
+    courier_partner: Joi.string().required(),
     order_id: Joi.required(),
     customerCode: Joi.string().required(),
     declaredValue: Joi.number().required(),
