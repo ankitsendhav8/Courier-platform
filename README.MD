@@ -89,13 +89,13 @@ npm run dev
 
 ## API Endpoints
 
-POST /api/v1/orders ###- Create a shipment
+POST /api/v1/orders - Create a shipment
  
-POST /api/v1/orders/bulk ###- Create shipment in bulk
+POST /api/v1/orders/bulk - Create shipment in bulk
 
-GET /api/v1/orders/:orderId/track ###- Track the shipment
+GET /api/v1/orders/:orderId/track - Track the shipment
 
-POST /api/v1/orders/:awb_number/cancel ###-  Cancel the shipment
+POST /api/v1/orders/:awb_number/cancel - Cancel the shipment
 
 
 ## Bulk Processing
