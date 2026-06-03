@@ -4,7 +4,7 @@ class MockCourierAdapter
     extends BaseCourierAdapter {
     async createShipment() {
         return {
-            courierOrderId: 'MC111',
+            orderNumber: 'MC111',
             awbNumber: 'MOCKAWB111',
             status: 'CREATED'
         };
@@ -12,7 +12,7 @@ class MockCourierAdapter
 
     async trackShipment(awbNumber) {
         return {
-            courierOrderId: 'MC111',
+            orderNumber: 'MC111',
             awbNumber: 'MOCKAWB111',
             status: 'CREATED'
         };
@@ -20,7 +20,7 @@ class MockCourierAdapter
 
     async cancelShipment(awbNumber) {
         return {
-            courierOrderId: 'MC111',
+            orderNumber: 'MC111',
             awbNumber: 'MOCKAWB111',
             status: 'CREATED'
         };

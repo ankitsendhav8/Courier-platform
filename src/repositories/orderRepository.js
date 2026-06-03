@@ -2,7 +2,7 @@ const pool = require('../config/database');
 
 async function createOrder(order) {
     const sql = `INSERT INTO orders( order_id, courier_partner, courier_order_id, awb_number, status, courier_request, courier_response) VALUES (?,?,?,?,?,?,?)`;
-    await pool.execute(sql, [order.order_id, order.courier_partner, order.courier_order_id, order.awb_number, order.status, JSON.stringify(order.courier_request), JSON.stringify(order.courier_response)]);
+    await pool.execute(sql, [order.orderNumber, order.courier_partner, order.courier_order_id, order.awb_number, order.status, JSON.stringify(order.courier_request), JSON.stringify(order.courier_response)]);
 }
 
 async function getOrderByOrderId(orderId) {

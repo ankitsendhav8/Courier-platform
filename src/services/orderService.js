@@ -12,13 +12,12 @@ async function createOrder(formData) {
         courier_partner: formData.courier_partner,
         message: 'Creating shipment'
     });
-    console.log('formData-createOrder', JSON.stringify(formData));
-
     const courier = CourierFactory.getAdapter(formData.courier_partner);
     const shipment = await courier.createShipment(formData);
     if (shipment) {
         await orderRepository.createOrder({
             ...formData,
+            courier_partner: formData.courier_partner,
             courier_order_id: shipment.orderNumber,
             awb_number: shipment.awbNumber,
             status: 'CREATED',
@@ -31,8 +30,8 @@ async function createOrder(formData) {
             awb: shipment.awbNumber
         });
     }
-    return shipment;
 
+    return shipment;
 }
 async function trackOrder(orderId) {
     const order = await orderRepository.getOrderByOrderId(orderId);

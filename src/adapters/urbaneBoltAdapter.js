@@ -25,9 +25,10 @@ class UrbaneBoltAdapter extends BaseCourierAdapter {
             return retryWithBackoff(
                 async () => {
                     const token = await this.getValidToken();
-                    delete formData.order_id;
-                    delete formData.orderNumber;
-                    let data = JSON.stringify(formData)
+                    let formDetails = JSON.parse(JSON.stringify(formData));
+                    delete formDetails.order_id;
+                    delete formDetails.courier_partner;
+                    let data = JSON.stringify([formDetails])
                     const response = await axios.post(
                         `${process.env.URBANEBOLT_BASE_URL}/api/v1/services/manifest/`,
                         data,
